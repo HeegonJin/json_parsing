@@ -1,0 +1,317 @@
+{
+    "groups": [],
+    "objects": [
+        {
+            "info": {
+                "max": 0,
+                "min": 0,
+                "shapes": {
+                    "box": {
+                        "default_value": {
+                            "color": "#FF625A"
+                        }
+                    }
+                },
+                "properties": []
+            },
+            "class_id": 1,
+            "class_name": "Person"
+        },
+        {
+            "info": {
+                "max": 0,
+                "min": 0,
+                "shapes": {
+                    "polygon": {
+                        "default_value": {
+                            "color": "#F89400"
+                        }
+                    }
+                },
+                "properties": []
+            },
+            "class_id": 2,
+            "class_name": "Bus"
+        },
+        {
+            "info": {
+                "max": 0,
+                "min": 0,
+                "shapes": {
+                    "polygon": {
+                        "default_value": {
+                            "color": "#FFCC00"
+                        }
+                    }
+                },
+                "properties": []
+            },
+            "class_id": 3,
+            "class_name": "SUV"
+        },
+        {
+            "info": {
+                "max": 0,
+                "min": 0,
+                "shapes": {
+                    "polygon": {
+                        "default_value": {
+                            "color": "#A3EB57"
+                        }
+                    }
+                },
+                "properties": []
+            },
+            "class_id": 4,
+            "class_name": "Sedan"
+        },
+        {
+            "info": {
+                "max": 0,
+                "min": 0,
+                "shapes": {
+                    "keypoint": {
+                        "default_value": {
+                            "color": "#4AE2B9"
+                        }
+                    }
+                },
+                "properties": []
+            },
+            "class_id": 5,
+            "class_name": "KP-person"
+        }
+    ],
+    "keypoint_interface": [
+        {
+            "id": "keypoint-id",
+            "name": "KP-person",
+            "edges": [
+                {
+                    "to": 2,
+                    "from": 4,
+                    "color": "#ff8a65"
+                },
+                {
+                    "to": 0,
+                    "from": 2,
+                    "color": "#ff8a65"
+                },
+                {
+                    "to": 8,
+                    "from": 6,
+                    "color": "#ff8a65"
+                },
+                {
+                    "to": 10,
+                    "from": 8,
+                    "color": "#ff8a65"
+                },
+                {
+                    "to": 12,
+                    "from": 6,
+                    "color": "#ff8a65"
+                },
+                {
+                    "to": 14,
+                    "from": 12,
+                    "color": "#ff8a65"
+                },
+                {
+                    "to": 16,
+                    "from": 14,
+                    "color": "#ff8a65"
+                },
+                {
+                    "to": 1,
+                    "from": 2,
+                    "color": "#4db6ac"
+                },
+                {
+                    "to": 5,
+                    "from": 6,
+                    "color": "#4db6ac"
+                },
+                {
+                    "to": 11,
+                    "from": 12,
+                    "color": "#4db6ac"
+                },
+                {
+                    "to": 1,
+                    "from": 0,
+                    "color": "#64b5f6"
+                },
+                {
+                    "to": 3,
+                    "from": 1,
+                    "color": "#64b5f6"
+                },
+                {
+                    "to": 7,
+                    "from": 5,
+                    "color": "#64b5f6"
+                },
+                {
+                    "to": 9,
+                    "from": 7,
+                    "color": "#64b5f6"
+                },
+                {
+                    "to": 11,
+                    "from": 5,
+                    "color": "#64b5f6"
+                },
+                {
+                    "to": 13,
+                    "from": 11,
+                    "color": "#64b5f6"
+                },
+                {
+                    "to": 15,
+                    "from": 13,
+                    "color": "#64b5f6"
+                }
+            ],
+            "nodes": [
+                {
+                    "v": 1,
+                    "x": 0.5,
+                    "y": 0.1,
+                    "name": "nose",
+                    "color": "#d50000"
+                },
+                {
+                    "v": 1,
+                    "x": 0.55,
+                    "y": 0.05,
+                    "name": "left_eye",
+                    "color": "#64b5f6",
+                    "opposite": 2
+                },
+                {
+                    "v": 1,
+                    "x": 0.45,
+                    "y": 0.05,
+                    "name": "right_eye",
+                    "color": "#ff8a65"
+                },
+                {
+                    "v": 1,
+                    "x": 0.6,
+                    "y": 0.075,
+                    "name": "left_ear",
+                    "color": "#64b5f6",
+                    "opposite": 4
+                },
+                {
+                    "v": 1,
+                    "x": 0.4,
+                    "y": 0.075,
+                    "name": "right_ear",
+                    "color": "#ff8a65"
+                },
+                {
+                    "v": 1,
+                    "x": 0.65,
+                    "y": 0.2,
+                    "name": "left_shoulder",
+                    "color": "#64b5f6",
+                    "opposite": 6
+                },
+                {
+                    "v": 1,
+                    "x": 0.35,
+                    "y": 0.2,
+                    "name": "right_shoulder",
+                    "color": "#ff8a65"
+                },
+                {
+                    "v": 1,
+                    "x": 0.85,
+                    "y": 0.3,
+                    "name": "left_elbow",
+                    "color": "#64b5f6",
+                    "opposite": 8
+                },
+                {
+                    "v": 1,
+                    "x": 0.15,
+                    "y": 0.3,
+                    "name": "right_elbow",
+                    "color": "#ff8a65"
+                },
+                {
+                    "v": 1,
+                    "x": 0.75,
+                    "y": 0.45,
+                    "name": "left_wrist",
+                    "color": "#64b5f6",
+                    "opposite": 10
+                },
+                {
+                    "v": 1,
+                    "x": 0.25,
+                    "y": 0.45,
+                    "name": "right_wrist",
+                    "color": "#ff8a65"
+                },
+                {
+                    "v": 1,
+                    "x": 0.62,
+                    "y": 0.5,
+                    "name": "left_hip",
+                    "color": "#64b5f6",
+                    "opposite": 12
+                },
+                {
+                    "v": 1,
+                    "x": 0.38,
+                    "y": 0.5,
+                    "name": "right_hip",
+                    "color": "#ff8a65"
+                },
+                {
+                    "v": 1,
+                    "x": 0.6,
+                    "y": 0.7,
+                    "name": "left_knee",
+                    "color": "#64b5f6",
+                    "opposite": 14
+                },
+                {
+                    "v": 1,
+                    "x": 0.4,
+                    "y": 0.7,
+                    "name": "right_knee",
+                    "color": "#ff8a65"
+                },
+                {
+                    "v": 1,
+                    "x": 0.6,
+                    "y": 0.9,
+                    "name": "left_ankle",
+                    "color": "#64b5f6",
+                    "opposite": 16
+                },
+                {
+                    "v": 1,
+                    "x": 0.4,
+                    "y": 0.9,
+                    "name": "right_ankle",
+                    "color": "#ff8a65"
+                }
+            ],
+            "point_visibility": [
+                {
+                    "name": "not labeled",
+                    "value": 0
+                },
+                {
+                    "name": "labeled and visible",
+                    "value": 1
+                }
+            ]
+        }
+    ]
+}

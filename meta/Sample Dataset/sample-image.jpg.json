@@ -1,0 +1,39 @@
+{
+    "label_id": "61651091-be32-4d05-b0bd-e27b4fab09cb",
+    "label_path": "labels/61651091-be32-4d05-b0bd-e27b4fab09cb.json",
+    "dataset": "Sample Dataset",
+    "data_key": "sample-image.jpg",
+    "last_updated_date": "2020-03-24T10:39:26.537021Z",
+    "image_info": {
+        "width": 2378,
+        "height": 1338
+    },
+    "masks": {
+        "default": {
+            "instance_id": {
+                "mask_path": "masks/instanceId/default/61651091-be32-4d05-b0bd-e27b4fab09cb.png",
+                "instance_ids": {
+                    "Bus": [
+                        1
+                    ],
+                    "Sedan": [
+                        10,
+                        11,
+                        12,
+                        16,
+                        17
+                    ],
+                    "SUV": [
+                        13,
+                        14,
+                        15,
+                        18
+                    ]
+                }
+            },
+            "class_id": {
+                "mask_path": "masks/classId/default/61651091-be32-4d05-b0bd-e27b4fab09cb.png"
+            }
+        }
+    }
+}
