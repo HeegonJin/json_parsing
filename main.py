@@ -7,13 +7,14 @@ import json
 from itertools import chain
 
 
-def drawPoly(df_row):
+def drawPoly(data):
     global mask_img
-    mask_label = df_row['id']
-    pts = df_row['shape']
-    pts = np.array(getPoly(pts),np.int32)
-    mask_img = cv2.fillPoly(mask_img, [pts], int(mask_label))
-    
+    for row in data:
+        mask_label= row[0]
+        pts = row[1]
+        pts = np.array(getPoly(pts),np.int32)
+        mask_img = cv2.fillPoly(mask_img, [pts], int(mask_label))
+        
     
 def getPoly(pts):
     new_pts = []
@@ -47,9 +48,8 @@ obj_df = pd.DataFrame(objects)
 cls_df = pd.DataFrame(classes).rename(columns = {"class_name" : "class"})
 
 df = pd.merge(obj_df, cls_df)
-df = df.loc[df['id'].isin(valid_ids)].loc[:,['id','shape']]
-for idx in range(df.shape[0]):
-    drawPoly(df.iloc[idx])
+data = df.loc[df['id'].isin(valid_ids)].loc[:,['id','shape']].to_numpy()
+drawPoly(data)
 
 mask_img *= 50
 cv2.imshow('mask_img', mask_img.astype(np.uint8))
