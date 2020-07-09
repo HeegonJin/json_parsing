@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import cv2
 import numpy as np
@@ -7,84 +6,66 @@ import json
 from itertools import chain
 
 
-def drawPoly(data):
-    global mask_img
-    for row in data:
-        mask_label= row[0]
-        pts = row[1]
-        pts = np.array(getPoly(pts),np.int32)
-        mask_img = cv2.fillPoly(mask_img, [pts], int(mask_label))
+def makeClsDict(project_json):
+    classes = project_json['objects']
+    class_dict = {}
+    
+    for _class in classes:
+        class_dict[_class['class_name']] = _class['class_id']
         
+    return class_dict
+
+if __name__ == "__main__":
+
+    abs_path = os.path.dirname(os.path.abspath(__file__))
+    meta_path = os.path.join(abs_path, "meta", "Sample Dataset", "sample-image.jpg.json")#"meta/Sample Dataset/sample-image.jpg.json")
+    label_path = os.path.join(abs_path, "labels","61651091-be32-4d05-b0bd-e27b4fab09cb.json")
+    project_path = os.path.join(abs_path, "project.json")
     
-def getPoly(pts):
-    new_pts = []
-    for pt in pts:
-        new_pt = list(pt.values())
-        new_pts.append(new_pt)
-    return new_pts
+    with open(meta_path, "r") as meta_file:
+        meta_json = json.load(meta_file)
 
+    valid_ids = list(chain.from_iterable(list(meta_json['masks']['default']['instance_id']['instance_ids'].keys())))
 
-abs_path = os.path.dirname(os.path.abspath(__file__))
-meta_path = os.path.join(abs_path, "meta", "Sample Dataset", "sample-image.jpg.json")#"meta/Sample Dataset/sample-image.jpg.json")
-label_path = os.path.join(abs_path, "labels","61651091-be32-4d05-b0bd-e27b4fab09cb.json")
-project_path = os.path.join(abs_path, "project.json")
-
-with open(meta_path, "r") as meta_file:
-    meta_json = json.load(meta_file)
-mask_img = np.zeros((meta_json['image_info']['height'], meta_json['image_info']['width']), np.int32)
-valid_ids = list(chain.from_iterable(list(meta_json['masks']['default']['instance_id']['instance_ids'].values())))
-
-with open(project_path, "r") as project_file:
-    project_json = json.load(project_file)
-classes = project_json['objects']
-
-with open(label_path, "r") as label_file:
-    label_json = json.load(label_file)
-objects = label_json['result']['objects']
-for obj in objects:
-    obj['shape'] = list(obj['shape'].values())[0]
+    # make class dictionary
+    with open(project_path, "r") as project_file:
+        project_json = json.load(project_file)        
     
-obj_df = pd.DataFrame(objects)
-cls_df = pd.DataFrame(classes).rename(columns = {"class_name" : "class"})
-
-df = pd.merge(obj_df, cls_df)
-data = df.loc[df['id'].isin(valid_ids)].loc[:,['id','shape']].to_numpy()
-drawPoly(data)
-
-mask_img *= 50
-cv2.imshow('mask_img', mask_img.astype(np.uint8))
-cv2.waitKey(0)
-'''
-meta_json = pd.read_json(meta_path, orient = 'index')
-label_path = os.path.join(abs_path, meta_json.loc['label_path',0])
-
-project_json = pd.read_json(os.path.join(abs_path, "project.json"), orient = 'index') #json to pandas, merge
-class2id = {}
-for i in range(5):
-    class2id[project_json.loc['objects',i]['class_name']] \
-        = project_json.loc['objects',i]['class_id']
-h = meta_json.loc['image_info', 0]['height']
-w = meta_json.loc['image_info', 0]['width']
-mask_img = np.zeros((h,w), np.int32)
-
-with open(label_path) as json_file:
-    image_json = json.load(json_file)
+    class_dict = makeClsDict(project_json)
     
-objects = image_json['result']['objects']
+    # make polygon points
+    with open(label_path, "r") as label_file:
+        label_json = json.load(label_file)
+        
+    objects = label_json['result']['objects']
+    object_list = []
+    
+    for i, obj in enumerate(objects):
 
-valid_ids = meta_json.loc['masks', 0]['default']['instance_id']['instance_ids']
-mask_id = []
-for i in valid_ids.values():
-    mask_id += i
+        if 'polygon' not in obj['shape']:
+            continue
 
-for obj in objects:
-    if obj['id'] in mask_id:
-        for key in obj['shape']:
-            if key == 'polygon':
-                pts = np.array(getPoly(obj['shape']['polygon']),np.int32)
-                mask_img = cv2.fillPoly(mask_img, [pts], class2id[obj['class']])
+        _shape_dict = obj['shape']['polygon']
+        points_list = []
 
-mask_img *= 50
-cv2.imshow('mask_img', mask_img.astype(np.uint8))
-cv2.waitKey(0)
-'''           
+        for _points in _shape_dict:
+            points_list.append([_points['x'], _points['y']])
+
+        object_list.append([obj['id'], class_dict[obj['class']], points_list])
+
+        
+
+    # make mask image
+
+    _img_height = meta_json['image_info']['height']
+    _img_width = meta_json['image_info']['width']
+    mask_img = np.zeros((_img_height, _img_width), np.int32)
+
+    for _obj_id, _obj_class, _obj_points in object_list:
+        pts = np.array(_obj_points, dtype=np.int32)
+        mask_img = cv2.fillPoly(mask_img, [pts], int(_obj_class))
+
+    mask_img *= 50
+
+    cv2.imshow('mask_img', mask_img.astype(np.uint8))
+    cv2.waitKey(0)    
